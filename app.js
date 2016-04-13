@@ -7,8 +7,42 @@ app.locals.pretty = true // jade 코드 자동 정렬
 
 app.use(express.static('public'));
 
+app.get('/queryURL3/:id/:mode', function(req, res){
+	res.send(req.params.id +', '+ req.params.mode);
+});
+
+app.get('/queryURL2/:id', function(req, res){
+	var arrLink = [
+		'apple',
+		'baby',
+		'car'
+	];
+	var output = `
+		<a href="/queryURL2/0">apple</a><br>
+		<a href="/queryURL2/1">baby</a><br>
+		<a href="/queryURL2/2">car</a><br>
+		${arrLink[req.params.id]}
+	`
+	res.send(output);
+});
+
+app.get('/queryURL', function(req, res){
+	var arrLink = [
+		'apple',
+		'baby',
+		'car'
+	];
+	var output = `
+		<a href="/queryURL?id=0">apple</a><br>
+		<a href="/queryURL?id=1">baby</a><br>
+		<a href="/queryURL?id=2">car</a><br>
+		${arrLink[req.query.id]}
+	`
+	res.send(output);
+});
+
 app.get('/template', function(req, res){
-	res.render('temp', {time:Date(), _title:'Jade'});
+	res.render('temp', {time:Date(), _title:'Jade'});//temp.jade 템플렛 렌더링 
 });
 
 app.get('/dynamic', function(req, res){
