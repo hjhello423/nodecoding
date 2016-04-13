@@ -1,11 +1,22 @@
 var express = require('express');//express 모듈을 로드
 var app = express();//express 모듈의 리턴값을 app에 저장하고 사용
-//app.set('views', './views');//views, 템플리트가 있는 디렉토리
 app.set('view engine', 'jade');//view engine, 사용할 템플리트 엔진
 app.set('views', './views');//views, 템플리트가 있는 디렉토리
 app.locals.pretty = true // jade 코드 자동 정렬
+var bodyParser = require('body-parser');//body-parser모듈 
+app.use(bodyParser.urlencoded({ extended: false }));// parse application/x-www-form-urlencoded 
 
 app.use(express.static('public'));
+
+app.get('/form', function(req, res){
+	res.render('form');
+});
+
+app.post('/form_receiver', function(req, res){
+	var title = req.body.title;
+	var description = req.body.description;
+	res.send(title+', '+description);
+});
 
 app.get('/queryURL3/:id/:mode', function(req, res){
 	res.send(req.params.id +', '+ req.params.mode);
